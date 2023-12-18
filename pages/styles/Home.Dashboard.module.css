@@ -1,0 +1,40 @@
+/* styles/dashboard.css */
+
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.buttonContainer {
+  width: 100%;
+  display:grid;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  flex-grow: 1;
+  padding: 1.5rem;
+  font-size: 1.5rem;
+  background-color: #5ddacd;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.button:hover {
+  background-color: #00796b;
+  transform: scale(1.05);
+}
+
+.button:active {
+  background-color: #004d40;
+  transform: scale(0.95);
+}
+
+

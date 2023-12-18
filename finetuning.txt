@@ -1,0 +1,36 @@
+wichtige Begriffe beim Bayernwerk:
+
+
+Begriffe:
+
+-Skalierbarkeit
+-Priority Bugs
+-User Storys
+-Pen-Test
+-Greenfield
+-Sprints
+-DSO
+-B2B Business to Business
+-B2M Business to Municapalities
+-B2C Business to Customer
+-DSO "Sowas wie Wir", teilen uns mit anderen DSO's das Energieportal 
+-oneEP -> Kombination aus B2B und B2M Portal
+-Pipeline
+-Silos (wird durch DevOps aufgehoben)
+-DevOps
+-Jour Fixe
+-Backlogs
+-Prod Test
+-Angular
+-StoryBook Framework
+-AngularReact
+-iPen Information Platform of Energy Networks
+-BAG	Bayernwerk AG	
+-ELB	ElbEnergie	
+-EP	Energieportal	Energy portal
+-LEW	Lechwerke AG	
+-SHNG	Schleswig-Holstein Netz AG	
+-SP	Story Points
+-IaaS Infrastructure-as-a-Service
+-PaaS Platform-as-a-Service
+-SaaS Software-as-a-Service
