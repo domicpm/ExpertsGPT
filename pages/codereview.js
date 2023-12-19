@@ -58,7 +58,7 @@ export default function Home() {
     
     
         setIsLoading(true);
-        const res = await fetch(`/api/openai_mockData`, {
+        const res = await fetch(`/api/openai_commitMessage`, {
           body: JSON.stringify({
             name: search,
             instructions: useDefaultPrompt ? '' : instructions,
@@ -80,13 +80,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>MockDataGPT</title>
+        <title>CodeReviewGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a>MockDataGPT</a>
+          <a>CodeReviewGPT</a>
         </h1>
 
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
@@ -98,7 +98,7 @@ export default function Home() {
               <textarea
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Enter your git diff file or use the upload file button below"
+                placeholder="Enter your code or use the file upload button below."
                 className={`${styles.codeTextarea} ${styles.answerTextarea}`}
                 disabled={useDefaultPrompt} // Disable textarea if using default prompt
               />
@@ -126,14 +126,14 @@ export default function Home() {
 
             <h4>Answer:</h4>
             {isLoading ? (
-              <div>MockDataGPT is typing...</div>
+              <div>CodeReviewGPT is typing...</div>
             ) : (
               <>
                 <SyntaxHighlighter language="javascript" style={solarizedlight}>
                   {data.text}
                 </SyntaxHighlighter>
                 <button onClick={copyToClipboard} className={styles.copyButton}>
-                  Copy Mock Data
+                  Copy Data
                 </button>
                 {copySuccess && <div style={{ color: 'green' }}>Data Copied Successfully!</div>}
               </>

@@ -14,7 +14,7 @@ const Dashboard = () => {
         <Link href="mockdatagenerator">
           <div className={styles.button}>MockDataGPT</div>
         </Link>
-        <Link href="commitmessagegenerator">
+        <Link href="commitmessage">
           <div className={styles.button}>CommitMessageGPT</div>
         </Link>
         <Link href="codereview">

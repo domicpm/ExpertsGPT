@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^1.5.1",
+    "codemirror": "^6.0.1",
     "crypto-browserify": "^3.12.0",
     "dotenv": "^16.3.1",
     "epress": "^0.0.1-security",
@@ -27,6 +28,7 @@
     "process": "^0.11.10",
     "react": "^18",
     "react-dom": "^18",
+    "react-simple-code-editor": "^0.13.1",
     "react-syntax-highlighter": "^15.5.0",
     "stream-browserify": "^3.0.0"
   },

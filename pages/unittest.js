@@ -12,7 +12,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [instructions, setInstructions] = useState('');
-  const [useDefaultPrompt, setUseDefaultPrompt] = useState(false); // New state for the checkbox
+  const [useDefaultPrompt, setUseDefaultPrompt] = useState(false);
 
   const copyToClipboard = () => {
     const textarea = document.createElement('textarea');
@@ -37,8 +37,6 @@ export default function Home() {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    // You can read the file content or perform other operations as needed
-    // For example, you can use FileReader to read the content of the file
     const reader = new FileReader();
     reader.onload = (e) => {
       const fileContent = e.target.result;
@@ -49,7 +47,7 @@ export default function Home() {
 
   const handleCheckboxChange = () => {
     setUseDefaultPrompt(!useDefaultPrompt);
-    setInstructions(''); // Clear instructions when the checkbox is clicked
+    setInstructions('');
   };
 
   useEffect(() => {
@@ -61,7 +59,7 @@ export default function Home() {
         }
     
         setIsLoading(true);
-        const res = await fetch(`/api/openai`, {
+        const res = await fetch(`/api/openai_unitTest`, {
           body: JSON.stringify({
             name: search,
             instructions: useDefaultPrompt ? '' : instructions,
@@ -98,16 +96,17 @@ export default function Home() {
           <div className={`${styles.card} ${styles.animation}`}>
             <div className={styles.codeWindow}>
               <h3>Code Input:</h3>
-              <textarea
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Copy and paste your code here..."
-                className={`${styles.codeTextarea} ${styles.answerTextarea}`}
-                disabled={useDefaultPrompt} // Disable textarea if using default prompt
-              />
+              <div className={styles.customCodeEditor}>
+  <textarea
+    spellCheck="false"  // Use camelCase for React JSX attributes
+    value={query}
+    onChange={(event) => setQuery(event.target.value)}
+    placeholder="Copy and paste your code here or use the upload file button below"
+    className={`${styles.codeTextarea} ${styles.answerTextarea}`}
+  />
+              </div>
               <input
                 type="file"
-                accept=".cs"
                 onChange={(event) => handleFileUpload(event)}
                 className={styles.fileInput}
               />
@@ -120,7 +119,7 @@ export default function Home() {
                 value={instructions}
                 onChange={(event) => setInstructions(event.target.value)}
                 className={styles.instructionsTextarea}
-                disabled={useDefaultPrompt} // Disable textarea if using default prompt
+                disabled={useDefaultPrompt}
               />
             </div>
 
