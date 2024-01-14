@@ -52,7 +52,7 @@ const myExportedFunction = async (req, res) => {
 
   // Append content from the uploaded file to userText
   if (req.body.name) {
-    userText += `\n\nContent from uploaded file:\n${req.body.name}`;
+    userText += `\n\nContent from CodeMirror text field:\n${req.body.code}`;
   }
   if (req.body.instructions) {
     userText += `\n\nUser instructions:\n${req.body.instructions}`;

@@ -61,7 +61,7 @@ export default function Home() {
         }
     
         setIsLoading(true);
-        const res = await fetch(`/api/openai`, {
+        const res = await fetch(`/api/mockData_openai`, {
           body: JSON.stringify({
             name: search,
             instructions: useDefaultPrompt ? '' : instructions,
