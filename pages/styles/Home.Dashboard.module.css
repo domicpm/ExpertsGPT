@@ -1,14 +1,14 @@
 /* styles/dashboard.css */
 
 .container {
+  padding: 200px;
   text-align: center;
-  padding: 20px;
 }
 
 .buttonContainer {
   width: 100%;
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
 }
@@ -17,27 +17,29 @@
   flex-grow: 1;
   padding: 1.5rem;
   font-size: 1.5rem;
-  background-color: #5ddacd; /* Keeping the button color */
-  color: #000000; /* Changing text color to white for contrast */
+  background-color: #0090BF; /* Keeping the button color */
+  color: #f8f8f8; /* Changing text color to white for contrast */
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
   border-radius: 8px; /* Rounded corners for a modern look */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+  text-decoration:underline
+  #0090BF
+
+  
 }
 
 .button:hover {
-  background-color: #00796b;
+  background-color: #0090BF;
   transform: scale(1.05);
+  text-decoration:underline
 }
 
 .button:active {
-  background-color: #004d40;
+  background-color: #1a5e8f;
   transform: scale(0.95);
 }
-
-/* New dashboard style */
-
 
 .container {
   border-radius: 10px; /* Rounded corners for the container */
@@ -48,16 +50,8 @@
   margin-top: 20px; /* Providing some space between the container and buttons */
 }
 
-/* Beta label for the last button */
-.betaLabel {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #f39c12; /* Use a noticeable color for the beta label */
-  color: #776565; /* Text color for contrast */
-  padding: 0.5rem;
-  border-radius: 5px;
-  font-size: 0.8rem;
-}
 
-/* Feel free to customize further based on your preferences. */
+
+
+
+
