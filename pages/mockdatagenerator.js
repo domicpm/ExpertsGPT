@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import styles from './styles/Home.module.css';
+import LoadingSpinner from './loadingSpinner';
+import Link from 'next/link';
 
 export default function Home() {
   const [data, setData] = useState({ text: '' });
@@ -79,6 +81,15 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+        <Link href="/" passHref>      
+          <img
+          src="/icon_home.png" 
+          alt="Home Icon"
+          className={styles.logo}
+          width={80} 
+          height={80} 
+        />
+          </Link>
       <Head>
         <title>MockDataGPT</title>
         <link rel="icon" href="/favicon.ico" />
@@ -126,8 +137,7 @@ export default function Home() {
 
             <h4>Answer:</h4>
             {isLoading ? (
-              <div>MockDataGPT is typing...</div>
-            ) : (
+       <LoadingSpinner />            ) : (
               <>
                 <SyntaxHighlighter language="javascript" style={solarizedlight}>
                   {data.text}

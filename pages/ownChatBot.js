@@ -12,7 +12,6 @@ export default function Home() {
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [copySuccess, setCopySuccess] = useState(false);
   const [instructions, setInstructions] = useState('');
   const [useDefaultPrompt, setUseDefaultPrompt] = useState(false); // New state for the checkbox
 
@@ -23,22 +22,9 @@ export default function Home() {
     setIsLoading(false);
     setInstructions('');
   };
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    // You can read the file content or perform other operations as needed
-    // For example, you can use FileReader to read the content of the file
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const fileContent = e.target.result;
-      setQuery(fileContent);
-    };
-    reader.readAsText(file);
-  };
-
   useEffect(() => {
     const fetchData = async () => {
-      if (search) {    
+      if (search) {
         setIsLoading(true);
         const res = await fetch(`/api/openai_chatBot`, {
           body: JSON.stringify({
@@ -57,7 +43,7 @@ export default function Home() {
       }
     };
     fetchData();
-  }, [search, useDefaultPrompt, instructions]);
+  }, [search, instructions]);
 
   return (
     <div className={styles.container}>
@@ -79,9 +65,7 @@ export default function Home() {
         <h1 className={styles.title}>
           <a>ChatBotGPT</a>
         </h1>
-
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
-
         <div className={styles.grid}>
           <div className={`${styles.card} ${styles.animation}`}>
             <div className={styles.codeWindow}>
@@ -92,8 +76,7 @@ export default function Home() {
                 placeholder="Enter a abbrevation in the Bayernwerk context"
                 className={`${styles.codeTextarea} ${styles.answerTextarea}`}
                 disabled={useDefaultPrompt} // Disable textarea if using default prompt
-              />
-        
+              />       
             </div>
             <div className={`${styles.card}`}>
               <div className={styles.buttonContainer}>
@@ -105,7 +88,6 @@ export default function Home() {
                 </button>
               </div>
             </div>
-
             <h4>Answer:</h4>
             {isLoading ? (
        <LoadingSpinner />            ) : (

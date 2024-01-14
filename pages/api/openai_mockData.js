@@ -1,36 +1,12 @@
 //openai.js
 import OpenAI from 'openai';
-//import pdf from 'pdf-parse';
-//import fs from 'fs';
 
-//const pdfFile = "";
-//const fileRequired = false;
-
-//let pdfText;
-
-/*  // Funktion zum Einlesen des PDFs, nur sofern fileRequired auf true gesetzt wird
-if(fileRequired){
- const readPdfFile = async () => {
-  try {
-    const data = await fs.promises.readFile(pdfFile);
-    const pdfData = await pdf(data);
-    pdfText = pdfData.text;
-  } catch (error) {
-    console.error('Fehler beim Lesen der PDF-Datei:', error);
-  }
-}; 
-// PDF einmalig einlesen
-readPdfFile();
-}  */
 const openai = new OpenAI({
   apiKey: "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"
 });
 
 const myExportedFunction = async (req, res) => {
-  /*  if (!pdfText && fileRequired == true) {
-     res.status(500).json({ error: 'Fehler bei der Verarbeitung der PDF-Datei.' });
-    return;
-  }  */
+
   let userText;
  userText = `Generate mock data based on the given input. Use this style (example):  input: generate mock data for a customer with name, age, gender. chatgpt output: 1. {
     "name": "Alice Smith",
@@ -45,13 +21,7 @@ const myExportedFunction = async (req, res) => {
   }
   const messages = [
     { role: 'user', content: userText },
-   // { role: 'user', content: pdfText },
   ];
-/*  }else{
-   const messages = [
-  {role: 'user', content: userText},
-  ]; */
-
   try {
     const chatCompletion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",

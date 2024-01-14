@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import styles from './styles/Home.module.css';
+import LoadingSpinner from './loadingSpinner';
+import Link from 'next/link';
 
 export default function Home() {
   const [data, setData] = useState({ text: '' });
@@ -26,7 +28,6 @@ export default function Home() {
       setCopySuccess(false);
     }, 2000);
   };
-
   const handleRefresh = () => {
     setData({ text: '' });
     setQuery('');
@@ -34,7 +35,6 @@ export default function Home() {
     setIsLoading(false);
     setInstructions('');
   };
-
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     // You can read the file content or perform other operations as needed
@@ -46,17 +46,9 @@ export default function Home() {
     };
     reader.readAsText(file);
   };
-
-  const handleCheckboxChange = () => {
-    setUseDefaultPrompt(!useDefaultPrompt);
-    setInstructions(''); // Clear instructions when the checkbox is clicked
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       if (search) {
-    
-    
         setIsLoading(true);
         const res = await fetch(`/api/openai_codeReview`, {
           body: JSON.stringify({
@@ -76,9 +68,19 @@ export default function Home() {
     };
     fetchData();
   }, [search, useDefaultPrompt, instructions]);
-
   return (
     <div className={styles.container}>
+          
+         <Link href="/" passHref>      
+          <img
+          src="/icon_home.png" 
+          alt="Home Icon"
+          className={styles.logo}
+          width={80} 
+          height={80} 
+        />
+          </Link>
+   
       <Head>
         <title>CodeReviewGPT</title>
         <link rel="icon" href="/favicon.ico" />
@@ -88,9 +90,7 @@ export default function Home() {
         <h1 className={styles.title}>
           <a>CodeReviewGPT</a>
         </h1>
-
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
-
         <div className={styles.grid}>
           <div className={`${styles.card} ${styles.animation}`}>
             <div className={styles.codeWindow}>
@@ -108,11 +108,6 @@ export default function Home() {
                 className={styles.fileInput}
               />
             </div>
-
-  
-
-      
-
             <div className={`${styles.card}`}>
               <div className={styles.buttonContainer}>
                 <button type="button" onClick={() => setSearch(query)}>
@@ -123,11 +118,9 @@ export default function Home() {
                 </button>
               </div>
             </div>
-
             <h4>Answer:</h4>
             {isLoading ? (
-              <div>CodeReviewGPT is typing...</div>
-            ) : (
+       <LoadingSpinner />            ) : (
               <>
                 <SyntaxHighlighter language="javascript" style={solarizedlight}>
                   {data.text}

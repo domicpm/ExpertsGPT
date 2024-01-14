@@ -16,6 +16,19 @@ export default function Home() {
   const [instructions, setInstructions] = useState('');
   const [useDefaultPrompt, setUseDefaultPrompt] = useState(false); // New state for the checkbox
 
+  const copyToClipboard = () => {
+    const textarea = document.createElement('textarea');
+    textarea.value = data.text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    setCopySuccess(true);
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 2000);
+  };
+
   const handleRefresh = () => {
     setData({ text: '' });
     setQuery('');
@@ -36,11 +49,18 @@ export default function Home() {
     reader.readAsText(file);
   };
 
+  const handleCheckboxChange = () => {
+    setUseDefaultPrompt(!useDefaultPrompt);
+    setInstructions(''); // Clear instructions when the checkbox is clicked
+  };
+
   useEffect(() => {
     const fetchData = async () => {
-      if (search) {    
+      if (search) {
+    
+    
         setIsLoading(true);
-        const res = await fetch(`/api/openai_chatBot`, {
+        const res = await fetch(`/api/openai_commitMessage`, {
           body: JSON.stringify({
             name: search,
             instructions: useDefaultPrompt ? '' : instructions,
@@ -71,13 +91,13 @@ export default function Home() {
         />
           </Link>
       <Head>
-        <title>ChatBotGPT</title>
+        <title>CodeGeneratorGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a>ChatBotGPT</a>
+          <a>CodeReviewGPT</a>
         </h1>
 
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
@@ -85,20 +105,24 @@ export default function Home() {
         <div className={styles.grid}>
           <div className={`${styles.card} ${styles.animation}`}>
             <div className={styles.codeWindow}>
-              <h3>Your Question:</h3>
+              <h3>Your Data:</h3>
               <textarea
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Enter a abbrevation in the Bayernwerk context"
+                placeholder="Enter your code or use the file upload button below."
                 className={`${styles.codeTextarea} ${styles.answerTextarea}`}
                 disabled={useDefaultPrompt} // Disable textarea if using default prompt
               />
-        
+              <input
+                type="file"
+                onChange={(event) => handleFileUpload(event)}
+                className={styles.fileInput}
+              />
             </div>
             <div className={`${styles.card}`}>
               <div className={styles.buttonContainer}>
                 <button type="button" onClick={() => setSearch(query)}>
-                  Ask
+                  Generate
                 </button>
                 <button type="button" onClick={handleRefresh} className={styles.refreshButton}>
                   Refresh
@@ -108,11 +132,16 @@ export default function Home() {
 
             <h4>Answer:</h4>
             {isLoading ? (
-       <LoadingSpinner />            ) : (
+                <LoadingSpinner/>
+            ) : (
               <>
                 <SyntaxHighlighter language="javascript" style={solarizedlight}>
                   {data.text}
                 </SyntaxHighlighter>
+                <button onClick={copyToClipboard} className={styles.copyButton}>
+                  Copy Data
+                </button>
+                {copySuccess && <div style={{ color: 'green' }}>Data Copied Successfully!</div>}
               </>
             )}
           </div>
