@@ -17,6 +17,7 @@ export default function Home() {
   const [useDefaultPrompt, setUseDefaultPrompt] = useState(false);
   const [selectedModel, setSelectedModel] = useState('gpt-4'); // Default model
   const [showTooltip, setShowTooltip] = useState(false);
+  const [temperature, setTemperature] = useState(0.5); // Initial temperature value
 
   const copyToClipboard = () => {
     const textarea = document.createElement('textarea');
@@ -68,6 +69,7 @@ export default function Home() {
             name: search,
             instructions: useDefaultPrompt ? '' : instructions,
             useDefaultPrompt: useDefaultPrompt,
+            temperature: temperature,
           }),
           headers: {
             'Content-Type': 'application/json',
@@ -94,7 +96,7 @@ export default function Home() {
           height={80} 
         />
           </Link>
-   
+  
       <Head>
         <title>UnitTestGPT</title>
         <link rel="icon" href="/favicon.ico" />
@@ -148,7 +150,18 @@ export default function Home() {
                 Use default prompt for unit tests
               </label>
             </div>
-
+            <div className={styles.temperatureSliderContainer}>
+        <label>Adjust Temperature:</label>
+        <input
+          type="range"
+          min="0"
+          max="2"
+          step="0.1"
+          value={temperature}
+          onChange={(event) => setTemperature(parseFloat(event.target.value))}
+        />
+        <span>{temperature.toFixed(1)}</span>
+      </div>
             <div className={styles.dropdownContainer}>
               <label>Select ChatGPT Model:</label>
               <select

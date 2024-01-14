@@ -51,6 +51,16 @@
 }
 
 
+.imageContainer {
+  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
+}
+
+.generatedImage {
+  max-width: 100%;
+  height: auto;
+}
 
 
 

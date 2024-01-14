@@ -23,6 +23,7 @@ const Dashboard = () => {
           <Link href="mockdatagenerator">
             <div className={styles.button}>MockDataGPT</div>
           </Link>
+        
           <Link href="commitmessage">
             <div className={styles.button}>CommitMessageGPT</div>
           </Link>
@@ -37,6 +38,12 @@ const Dashboard = () => {
           </Link>
           <Link href="codegenerator">
             <div className={styles.button}>CodeGeneratorGPT</div>
+          </Link> 
+          <Link href="websiteGenerator">
+            <div className={styles.button}>ImageGeneratorGPT</div>
+          </Link> 
+           <Link href="createChatbot">
+            <div className={styles.button}>Create ChatBot</div>
           </Link>
         </div>
       </div>
