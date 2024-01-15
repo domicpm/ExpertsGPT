@@ -1,5 +1,6 @@
-// Home.js
-import React, { useState, useEffect } from 'react';
+// unittest.js
+
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Head from 'next/head';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
@@ -9,7 +10,6 @@ import Link from 'next/link';
 
 export default function Home() {
   const [data, setData] = useState({ text: '' });
-  const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -18,7 +18,7 @@ export default function Home() {
   const [selectedModel, setSelectedModel] = useState('gpt-4'); // Default model
   const [showTooltip, setShowTooltip] = useState(false);
   const [temperature, setTemperature] = useState(0.5); // Initial temperature value
-
+  const [query, setQuery] = useState(''); // Add this line for query state
   const copyToClipboard = () => {
     const textarea = document.createElement('textarea');
     textarea.value = data.text;
@@ -31,10 +31,9 @@ export default function Home() {
       setCopySuccess(false);
     }, 2000);
   };
-
+ 
   const handleRefresh = () => {
     setData({ text: '' });
-    setQuery('');
     setSearch('');
     setIsLoading(false);
     setInstructions('');
@@ -42,6 +41,8 @@ export default function Home() {
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
+    // You can read the file content or perform other operations as needed
+    // For example, you can use FileReader to read the content of the file
     const reader = new FileReader();
     reader.onload = (e) => {
       const fileContent = e.target.result;
@@ -118,12 +119,13 @@ export default function Home() {
                   spellCheck="false"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Copy and paste your code here or use the upload file button below"
+                  placeholder="Copy a and paste your code here or use the upload file button below"
                   className={`${styles.codeTextarea} ${styles.answerTextarea}`}
                 />
               </div>
               <input
                 type="file"
+                accept=".cs"
                 onChange={(event) => handleFileUpload(event)}
                 className={styles.fileInput}
               />
@@ -190,7 +192,7 @@ export default function Home() {
 
             <div className={`${styles.card}`}>
               <div className={styles.buttonContainer}>
-                <button type="button" onClick={() => setSearch(query)}>
+              <button type="button" onClick={() => setSearch(query)}>
                   Generate
                 </button>
                 <button type="button" onClick={handleRefresh} className={styles.refreshButton}>
@@ -204,7 +206,7 @@ export default function Home() {
               <LoadingSpinner />
             ) : (
               <>
-                <SyntaxHighlighter language="javascript" style={solarizedlight}>
+                <SyntaxHighlighter language="javascript" style={solarizedlight} showLineNumbers>
                   {data.text}
                 </SyntaxHighlighter>
                 <button onClick={copyToClipboard} className={styles.copyButton}>
