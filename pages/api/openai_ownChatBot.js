@@ -8,6 +8,7 @@ const myExportedFunction = async (req, res) => {
   
   let userText;
  userText = `${req.body.name}`;
+ userText = `You will behave as a ChatBot, beeing a expert / imitating the behavour of a person on the topic as follows: ${req.body.instructions}`;
   if (!userText) {
     res.status(400).json({ error: 'Benutzereingabe fehlt oder ist leer.' });
     return;
@@ -20,6 +21,7 @@ const myExportedFunction = async (req, res) => {
     const chatCompletion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: messages,
+      temperature: req.body.temperature,
     });
     const responseText = chatCompletion.choices[0].message.content;
     res.status(200).json({ text: responseText });
