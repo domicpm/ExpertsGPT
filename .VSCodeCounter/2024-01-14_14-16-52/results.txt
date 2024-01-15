@@ -1,0 +1,31 @@
+Date : 2024-01-14 14:16:52
+Directory : c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api
+Total : 7 files,  239 codes, 20 comments, 67 blanks, all 326 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |          7 |        239 |         20 |         67 |        326 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |          7 |        239 |         20 |         67 |        326 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                          | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_chatBot.js          | JavaScript |         49 |          6 |         15 |         70 |
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_codeReview.js       | JavaScript |         42 |          5 |         13 |         60 |
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_commitMessage.js    | JavaScript |         27 |          1 |          9 |         37 |
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_mockData.js         | JavaScript |         31 |          1 |          9 |         41 |
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_ownChatBot.js       | JavaScript |         27 |          2 |          4 |         33 |
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_unitTest.js         | JavaScript |         47 |          5 |         11 |         63 |
+| c:\Users\domin\Dropbox\ChatGPT_Experts\ExpertsGPT\ExpertsGPT\pages\api\openai_websiteGenerator.js | JavaScript |         16 |          0 |          6 |         22 |
+| Total                                                                                             |            |        239 |         20 |         67 |        326 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

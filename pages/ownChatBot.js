@@ -1,4 +1,4 @@
-// Home.js
+// ownChatBot.js
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -7,6 +7,22 @@ import styles from './styles/Home.module.css';
 import LoadingSpinner from './loadingSpinner';
 import Link from 'next/link';
 
+let userInputTitle;
+let userInstructions;
+let userTemperature;
+
+export function setTitle(title) {
+  userInputTitle = title;
+}
+
+export function setUserInstructions(instr) {
+  userInstructions = instr;
+}
+
+export function setUserTemperature(temp) {
+  userTemperature = temp;
+}
+
 export default function Home() {
   const [data, setData] = useState({ text: '' });
   const [query, setQuery] = useState('');
@@ -14,7 +30,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [instructions, setInstructions] = useState('');
-  const [useDefaultPrompt, setUseDefaultPrompt] = useState(false); // New state for the checkbox
+  const [useDefaultPrompt, setUseDefaultPrompt] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('gpt-4');
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [temperature, setTemperature] = useState(0.5);
 
   const copyToClipboard = () => {
     const textarea = document.createElement('textarea');
@@ -29,18 +48,8 @@ export default function Home() {
     }, 2000);
   };
 
-  const handleRefresh = () => {
-    setData({ text: '' });
-    setQuery('');
-    setSearch('');
-    setIsLoading(false);
-    setInstructions('');
-  };
-
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
-    // You can read the file content or perform other operations as needed
-    // For example, you can use FileReader to read the content of the file
     const reader = new FileReader();
     reader.onload = (e) => {
       const fileContent = e.target.result;
@@ -49,22 +58,15 @@ export default function Home() {
     reader.readAsText(file);
   };
 
-  const handleCheckboxChange = () => {
-    setUseDefaultPrompt(!useDefaultPrompt);
-    setInstructions(''); // Clear instructions when the checkbox is clicked
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       if (search) {
-    
-    
         setIsLoading(true);
-        const res = await fetch(`/api/openai_mockData`, {
+        const res = await fetch(`/api/openai_ownChatBot`, {
           body: JSON.stringify({
             name: search,
-            instructions: useDefaultPrompt ? '' : instructions,
-            useDefaultPrompt: useDefaultPrompt,
+            instructions: userInstructions,
+            temperature: userTemperature,
           }),
           headers: {
             'Content-Type': 'application/json',
@@ -77,56 +79,86 @@ export default function Home() {
       }
     };
     fetchData();
-  }, [search, useDefaultPrompt, instructions]);
+  }, [search, useDefaultPrompt, userInstructions, userTemperature]);
+
+
+useEffect(() => {
+  // Load user input from localStorage
+  const storedUserData = localStorage.getItem('userData');
+  if (storedUserData) {
+    const parsedData = JSON.parse(storedUserData);
+    //setQuery(parsedData.query);
+    setUserInstructions(parsedData.instructions);
+    setUserTemperature(parsedData.temperature);
+  }
+}, [query, userInstructions, userTemperature]);
+
+  const handleRefresh = () => {
+    setData({ text: '' });
+    setQuery('');
+    setSearch('');
+    setIsLoading(false);
+    setInstructions('');
+  };
+
+  const handleGenerate = () => {
+    setSearch(query);
+
+    // Save user input to localStorage
+    const userData = {
+      query,
+      instructions: userInstructions,
+      temperature: userTemperature,
+    };
+    localStorage.setItem('userData', JSON.stringify(userData));
+  };
 
   return (
     <div className={styles.container}>
-        <Link href="/" passHref>      
-          <img
-          src="/icon_home.png" 
+      <Link href="/" passHref>
+        <img
+          src="/icon_home.png"
           alt="Home Icon"
           className={styles.logo}
-          width={80} 
-          height={80} 
+          width={80}
+          height={80}
         />
-          </Link>
+      </Link>
+
       <Head>
-        <title>MockDataGPT</title>
+        <title>OwnChatBotGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a>MockDataGPT</a>
+          <a>{userInputTitle}</a>
         </h1>
 
-        <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
+        <p className={styles.description}></p>
 
         <div className={styles.grid}>
           <div className={`${styles.card} ${styles.animation}`}>
             <div className={styles.codeWindow}>
-              <h3>Your Data:</h3>
-              <textarea
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Enter your git diff file or use the upload file button below"
-                className={`${styles.codeTextarea} ${styles.answerTextarea}`}
-                disabled={useDefaultPrompt} // Disable textarea if using default prompt
-              />
+              <h3>User Input:</h3>
+              <div className={styles.customCodeEditor}>
+                <textarea
+                  spellCheck="false"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Ask any Question..."
+                  className={`${styles.codeTextarea} ${styles.answerTextarea}`}
+                />
+              </div>
               <input
                 type="file"
                 onChange={(event) => handleFileUpload(event)}
                 className={styles.fileInput}
               />
             </div>
-
-  
-
-      
-
             <div className={`${styles.card}`}>
               <div className={styles.buttonContainer}>
-                <button type="button" onClick={() => setSearch(query)}>
+                <button type="button" onClick={handleGenerate}>
                   Generate
                 </button>
                 <button type="button" onClick={handleRefresh} className={styles.refreshButton}>
@@ -137,15 +169,16 @@ export default function Home() {
 
             <h4>Answer:</h4>
             {isLoading ? (
-       <LoadingSpinner />            ) : (
+              <LoadingSpinner />
+            ) : (
               <>
                 <SyntaxHighlighter language="javascript" style={solarizedlight}>
                   {data.text}
                 </SyntaxHighlighter>
                 <button onClick={copyToClipboard} className={styles.copyButton}>
-                  Copy Mock Data
+                  Copy Code
                 </button>
-                {copySuccess && <div style={{ color: 'green' }}>Data Copied Successfully!</div>}
+                {copySuccess && <div style={{ color: 'green' }}>Code Copied Successfully!</div>}
               </>
             )}
           </div>
