@@ -37,16 +37,17 @@
 /* Improve Code Textarea Styling */
 .codeTextarea {
   width: 99%;
-  height: 180px;
+  height: 400px; /* Adjusted height to make it larger */
   padding: 8px;
-  font-family: 'Courier New', Courier, monospace;
-  border: 1px solid #009688;
-  margin-bottom: 1rem;
-  background-color: #1d2d44;
-  color: #f8f8f8;
+  border: none;
+  background-color: #000000;
+  color: #f1f1f1;
+  font-size: 18px;
+  line-height: 1.5;
   resize: none;
-  font-size: large;
+  outline: none;
 }
+
 
 /* Adjust Instructions Window Styling */
 .instructionsWindow {
@@ -63,7 +64,7 @@
 /* Improve Instructions Textarea Styling */
 .instructionsTextarea {
   width: 99%;
-  height: 180px;
+  height: 100px;
   padding: 8px;
   font-family: 'Courier New', Courier, monospace;
   border: 1px solid #009688;

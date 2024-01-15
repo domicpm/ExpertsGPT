@@ -1,71 +1,134 @@
-import Head from "next/head";
-import styles from "./styles/Home.module.css"; // Pfade sollten relativ zur aktuellen Datei sein
-import { useState, useEffect } from 'react';
+// Home.js
+import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { solarizedlight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import styles from './styles/Home.module.css';
 
 export default function Home() {
   const [data, setData] = useState({ text: '' });
-  const [query, setQuery] = useState();
-  const [search, setSearch] = useState();
+  const [query, setQuery] = useState('');
+  const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [instructions, setInstructions] = useState('');
+  const [useDefaultPrompt, setUseDefaultPrompt] = useState(false); // New state for the checkbox
+
+  const copyToClipboard = () => {
+    const textarea = document.createElement('textarea');
+    textarea.value = data.text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    setCopySuccess(true);
+    setTimeout(() => {
+      setCopySuccess(false);
+    }, 2000);
+  };
+
+  const handleRefresh = () => {
+    setData({ text: '' });
+    setQuery('');
+    setSearch('');
+    setIsLoading(false);
+    setInstructions('');
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    // You can read the file content or perform other operations as needed
+    // For example, you can use FileReader to read the content of the file
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+      setQuery(fileContent);
+    };
+    reader.readAsText(file);
+  };
+
+  const handleCheckboxChange = () => {
+    setUseDefaultPrompt(!useDefaultPrompt);
+    setInstructions(''); // Clear instructions when the checkbox is clicked
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       if (search) {
+    
+    
         setIsLoading(true);
-        const res = await fetch(`/api/chatbot_openai`, {
+        const res = await fetch(`/api/openai_chatBot`, {
           body: JSON.stringify({
-            name: search
+            name: search,
+            instructions: useDefaultPrompt ? '' : instructions,
+            useDefaultPrompt: useDefaultPrompt,
           }),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          method: 'POST'
+          method: 'POST',
         });
-        const data = await res.json();
-        setData(data);
+        const resultData = await res.json();
+        setData(resultData);
         setIsLoading(false);
       }
     };
     fetchData();
-  }, [search]);
+  }, [search, useDefaultPrompt, instructions]);
 
   return (
-    
     <div className={styles.container}>
       <Head>
-        <title>Bayernwerk ChatBot</title>
+        <title>ChatBotGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a>ChatBot / Bayernwerk abbrevations</a>
+          <a>ChatBotGPT</a>
         </h1>
 
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
 
         <div className={styles.grid}>
-          <div className={styles.card}>
-            <h3>Enter a abbrevation in the Bayernwerk context:</h3>
-            <input
-            type="text"
-            value={query}
-            onChange={event => setQuery(event.target.value)}
-            style={{ width: "100%", height: "50px", textAlign: "left", verticalAlign: "top"}}
-            />
-            <div className={styles.button}>
-              <button
-                type="button"
-                onClick={() => setSearch(query)}
-              >
-                Generate
-              </button>
+          <div className={`${styles.card} ${styles.animation}`}>
+            <div className={styles.codeWindow}>
+              <h3>Your Question:</h3>
+              <textarea
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Enter a abbrevation in the Bayernwerk context"
+                className={`${styles.codeTextarea} ${styles.answerTextarea}`}
+                disabled={useDefaultPrompt} // Disable textarea if using default prompt
+              />
+        
             </div>
+
+  
+
+      
+
+            <div className={`${styles.card}`}>
+              <div className={styles.buttonContainer}>
+                <button type="button" onClick={() => setSearch(query)}>
+                  Ask
+                </button>
+                <button type="button" onClick={handleRefresh} className={styles.refreshButton}>
+                  Refresh
+                </button>
+              </div>
+            </div>
+
             <h4>Answer:</h4>
             {isLoading ? (
-              <div>Loading ...</div>
+              <div>ChatBotGPT is typing...</div>
             ) : (
-              <span>{data.text}</span>
+              <>
+                <SyntaxHighlighter language="javascript" style={solarizedlight}>
+                  {data.text}
+                </SyntaxHighlighter>
+              </>
             )}
           </div>
         </div>

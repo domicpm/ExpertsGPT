@@ -57,41 +57,50 @@ export default function Home() {
     setInstructions('');
   };
 
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    // You can read the file content or perform other operations as needed
+    // For example, you can use FileReader to read the content of the file
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const fileContent = e.target.result;
+      setQuery(fileContent);
+    };
+    reader.readAsText(file);
+  };
+
   const handleCheckboxChange = () => {
     setUseDefaultPrompt(!useDefaultPrompt);
     setInstructions('');
   };
 
-  const handleGenerate = () => {
-    setIsLoading(true);
-    fetchData();
-  };
-
-  const fetchData = async () => {
-    if (file || (!useDefaultPrompt && instructions)) {
-      const res = await fetch(`/api/unitTest_openai`, {
-        body: JSON.stringify({
-          code: file || null,
-          instructions: useDefaultPrompt ? '' : instructions,
-          useDefaultPrompt: useDefaultPrompt,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      });
-      const resultData = await res.json();
-      setData(resultData);
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    // Only fetch data when the Generate button is clicked
-    if (file || (!useDefaultPrompt && instructions)) {
-      fetchData();
-    }
-  }, [file, useDefaultPrompt, instructions]);
+    const fetchData = async () => {
+      if (search) {
+        if (!useDefaultPrompt && !instructions) {
+          alert('Please give instructions or use the default prompt.');
+          return;
+        }
+    
+        setIsLoading(true);
+        const res = await fetch(`/api/openai`, {
+          body: JSON.stringify({
+            name: search,
+            instructions: useDefaultPrompt ? '' : instructions,
+            useDefaultPrompt: useDefaultPrompt,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        });
+        const resultData = await res.json();
+        setData(resultData);
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [search, useDefaultPrompt, instructions]);
 
   return (
     <div className={styles.container}>
@@ -109,14 +118,22 @@ export default function Home() {
 
         <div className={styles.grid}>
           <div className={`${styles.card} ${styles.animation}`}>
-            <App value={file} onChange={(val, viewUpdate) => console.log('val:', val)} />
-
-            <input
-              type="file"
-              accept=".cs"
-              onChange={handleFileUpload}
-              className={styles.fileInput}
-            />
+            <div className={styles.codeWindow}>
+              <h3>Code Input:</h3>
+              <textarea
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Copy and paste your code here..."
+                className={`${styles.codeTextarea} ${styles.answerTextarea}`}
+                disabled={useDefaultPrompt} // Disable textarea if using default prompt
+              />
+              <input
+                type="file"
+                accept=".cs"
+                onChange={(event) => handleFileUpload(event)}
+                className={styles.fileInput}
+              />
+            </div>
 
             <div className={styles.instructionsWindow}>
               <h3>Instructions:</h3>
