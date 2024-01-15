@@ -5,14 +5,8 @@ import Head from 'next/head';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import styles from './styles/Home.module.css';
-<<<<<<< HEAD
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
-import App from './App';  // Import the App component
-=======
 import LoadingSpinner from './loadingSpinner';
 import Link from 'next/link';
->>>>>>> c11f8dddaaae9ee9c5911343e31b6fb45e9f3460
 
 export default function Home() {
   const [data, setData] = useState({ text: '' });
@@ -21,32 +15,9 @@ export default function Home() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [instructions, setInstructions] = useState('');
   const [useDefaultPrompt, setUseDefaultPrompt] = useState(false);
-<<<<<<< HEAD
-  const [file, setFile] = useState(null);
-  const codeMirrorRef = useRef(null);
-
-  const handleFileUpload = useCallback((event) => {
-    const uploadedFile = event.target.files[0];
-    if (uploadedFile) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const fileContent = e.target.result;
-        setFile(fileContent);
-        setSearch(uploadedFile.name);
-        // Update the CodeMirror content
-        const codeMirrorInstance = codeMirrorRef.current;
-        if (codeMirrorInstance) {
-          codeMirrorInstance.setValue(fileContent);
-        }
-      };
-      reader.readAsText(uploadedFile);
-    }
-  }, []);
-=======
   const [selectedModel, setSelectedModel] = useState('gpt-4'); // Default model
   const [showTooltip, setShowTooltip] = useState(false);
   const [temperature, setTemperature] = useState(0.5); // Initial temperature value
->>>>>>> c11f8dddaaae9ee9c5911343e31b6fb45e9f3460
 
   const copyToClipboard = () => {
     const textarea = document.createElement('textarea');
@@ -143,15 +114,6 @@ export default function Home() {
           <div className={`${styles.card} ${styles.animation}`}>
             <div className={styles.codeWindow}>
               <h3>Code Input:</h3>
-<<<<<<< HEAD
-              <textarea
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Copy and paste your code here..."
-                className={`${styles.codeTextarea} ${styles.answerTextarea}`}
-                disabled={useDefaultPrompt} // Disable textarea if using default prompt
-              />
-=======
               <div className={styles.customCodeEditor}>
                 <textarea
                   spellCheck="false"
@@ -161,7 +123,6 @@ export default function Home() {
                   className={`${styles.codeTextarea} ${styles.answerTextarea}`}
                 />
               </div>
->>>>>>> c11f8dddaaae9ee9c5911343e31b6fb45e9f3460
               <input
                 type="file"
                 accept=".cs"
