@@ -13,9 +13,18 @@ const myExportedFunction = async (req, res, temperature) => {
 
   if (req.body.useDefaultPrompt) {
     // Use the default prompt if the checkbox is checked
-    userText =
+    /* userText =
       `Generate unit tests for the specified C# code
     using NUnit, strive for maximum code coverage
+    when generating the unit tests. 
+    Return code only. A good unit test suite should aim to:
+    - Test the function's behavior for a wide range of possible inputs
+    - Test edge cases that the author may not have foreseen
+    - Be easy to read and understand, with clean code and descriptive names
+    - Be deterministic, so that the tests always pass or fail in the same way`; */
+
+    userText = `Generate unit tests for the specified javascript code
+    using Jest, strive for maximum code coverage
     when generating the unit tests. 
     Return code only. A good unit test suite should aim to:
     - Test the function's behavior for a wide range of possible inputs
@@ -28,7 +37,7 @@ const myExportedFunction = async (req, res, temperature) => {
   }
   // Append content from the uploaded file to userText
   if (req.body.name) {
-    userText += `\n\nContent from CodeMirror text field:\n${req.body.code}`;
+    userText += `\n\nContent from CodeMirror text field:\n${req.body.name}`;
   }
   if (req.body.instructions) {
     userText += `\n\nUser instructions:\n${req.body.instructions}`;

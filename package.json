@@ -44,6 +44,8 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
     "postcss": "^8",
     "style-loader": "^3.3.3",
     "tailwindcss": "^3",

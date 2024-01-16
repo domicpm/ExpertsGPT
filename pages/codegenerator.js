@@ -97,7 +97,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a>CodeReviewGPT</a>
+          <a>CodeGeneratorGPT</a>
         </h1>
 
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>

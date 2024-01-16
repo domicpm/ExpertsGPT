@@ -6,7 +6,7 @@ import { solarizedlight } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import styles from './styles/Home.module.css';
 import LoadingSpinner from './loadingSpinner';
 import Link from 'next/link';
-
+import Image from 'next/image'
 export default function Home() {
   const [data, setData] = useState({ text: '' });
   const [query, setQuery] = useState('');
@@ -82,13 +82,13 @@ export default function Home() {
       }
     };
     fetchData();
-  }, [search, useDefaultPrompt, instructions]);
+  }, [search, useDefaultPrompt, instructions, temperature]);
 
   return (
     
     <div className={styles.container}>
          <Link href="/" passHref>      
-          <img
+          <Image
           src="/icon_home.png" 
           alt="Home Icon"
           className={styles.logo}
