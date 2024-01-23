@@ -6,7 +6,7 @@ import Link from 'next/link';
 import LoadingSpinner from './loadingSpinner';
 import {setTitle, setUserInstructions, setUserTemperature} from './ownChatBot'
 import {setIsBotCreated} from './index.js'
-export default function createChatBot() {
+export default function CreateChatBot() {
   const [data, setData] = useState({ text: '' });
   const [query, setQuery] = useState('');
   const [instructions, setInstructions] = useState('');

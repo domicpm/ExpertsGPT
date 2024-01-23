@@ -82,17 +82,6 @@ export default function Home() {
   }, [search, useDefaultPrompt, userInstructions, userTemperature]);
 
 
-useEffect(() => {
-  // Load user input from localStorage
-  const storedUserData = localStorage.getItem('userData');
-  if (storedUserData) {
-    const parsedData = JSON.parse(storedUserData);
-    //setQuery(parsedData.query);
-    setUserInstructions(parsedData.instructions);
-    setUserTemperature(parsedData.temperature);
-  }
-}, [query, userInstructions, userTemperature]);
-
   const handleRefresh = () => {
     setData({ text: '' });
     setQuery('');

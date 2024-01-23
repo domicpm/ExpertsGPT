@@ -1,14 +1,16 @@
-//openai.js
+//openai_ownChatBot.js
 import OpenAI from 'openai';
 const openai = new OpenAI({
   apiKey: "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"
 });
 
 const myExportedFunction = async (req, res) => {
-  
-  let userText;
- userText = `${req.body.name}`;
- userText += `You will behave as a ChatBot, beeing a expert / imitating the behavour of a person on the topic as follows: ${req.body.instructions}`;
+  console.log(req.body.instructions);
+  console.log(req.body.name);
+  console.log(req.body.query)
+  let userText = ` ${req.body.name}`;
+   userText += ` ${req.body.instructions}`;
+
   if (!userText) {
     res.status(400).json({ error: 'Benutzereingabe fehlt oder ist leer.' });
     return;
