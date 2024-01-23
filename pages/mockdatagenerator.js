@@ -109,7 +109,7 @@ export default function Home() {
               <textarea
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Enter your git diff file or use the upload file button below"
+                placeholder="Describe your data..."
                 className={`${styles.codeTextarea} ${styles.answerTextarea}`}
                 disabled={useDefaultPrompt} // Disable textarea if using default prompt
               />
