@@ -64,7 +64,7 @@ export default function Home() {
         }
 
         setIsLoading(true);
-        const res = await fetch(`/api/openai_codeReview.js`, {
+        const res = await fetch(`/api/openai_codeDebugging`, {
           body: JSON.stringify({
             name: search,
             instructions: useDefaultPrompt ? '' : instructions,
@@ -98,13 +98,13 @@ export default function Home() {
           </Link>
   
       <Head>
-        <title>CodeReviewGPT</title>
+        <title>CodeDebuggingGPT</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a>CodeReviewGPT</a>
+          <a>CodeDebuggingGPT</a>
         </h1>
 
         <p className={styles.description}>Built with NextJS & GPT-4 API for Bayernwerk</p>
@@ -204,9 +204,12 @@ export default function Home() {
               <LoadingSpinner />
             ) : (
               <>
-                <SyntaxHighlighter language="javascript" style={solarizedlight}>
+                <div className={styles.answerContainer}>
+                <pre className={styles.answerText}>
                   {data.text}
-                </SyntaxHighlighter>
+                  </pre>
+                  </div>
+
                 <button onClick={copyToClipboard} className={styles.copyButton}>
                   Copy Code
                 </button>

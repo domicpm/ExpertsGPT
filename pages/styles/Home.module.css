@@ -110,10 +110,15 @@
   align-self: center;
   align-content: center;
 }
-.dropdownContainer{
+.dropdownContainerPrompt{
   font-size: large;
   text-align: left;
-  padding-bottom: 2%;
+  padding-bottom: 1%;
+}
+.dropdownContainerModel{
+  font-size: large;
+  text-align: left;
+  padding-bottom: 1%;
 }
 
 /* Add Tooltip Styling */
@@ -178,10 +183,11 @@
 /* ... (existing styles) */
 
 .temperatureSliderContainer {
-  margin-top: 10px;
+  margin-top: 0%;
   display: flex;
   align-items: center;
   font-size: large;
+  margin-bottom: 2%;
 }
 
 .temperatureSliderContainer label {
@@ -219,4 +225,19 @@
 .button:active {
   background-color: #1a5e8f;
   transform: scale(0.95);
+}
+.answerContainer {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #ccc; /* Add border for the window */
+  border-radius: 4px; /* Add rounded corners */
+  padding: 10px; /* Add padding for content */
+  background-color: #f8f8f8; /* Set background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.answerText {
+  white-space: pre-wrap; /* Preserve line breaks */
+  word-wrap: break-word; /* Break long words */
+  font-family: 'Courier New', Courier, monospace; /* Optional: Use monospace font for code-like appearance */
 }

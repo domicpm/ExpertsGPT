@@ -14,9 +14,7 @@ const myExportedFunction = async (req, res, temperature) => {
   if (req.body.useDefaultPrompt) {
     // Use the default prompt if the checkbox is checked
     userText =
-      `You are a world-class developer with an eagle eye for unintended bugs and edge cases. 
-      You carefully explain code with great detail and accuracy. You organize your explanations in markdown-formatted, bulleted lists.
-      `;
+      `You are a expert for code debugging in python. The given python code snippets contain a error. Find the error and explain.`;
   } else {
     // Use the user-provided text if the checkbox is not checked
     userText = req.body.userText || '';
@@ -42,7 +40,7 @@ const myExportedFunction = async (req, res, temperature) => {
 
   try {
     const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: messages,
       temperature: temperature,
     });

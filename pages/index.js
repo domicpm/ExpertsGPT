@@ -34,8 +34,8 @@ const Dashboard = () => {
             <Link href="commitmessage">
               <div className={styles.button}>CommitMessageGPT</div>
             </Link>
-            <Link href="codereview">
-              <div className={styles.button}>CodeReviewGPT</div>
+            <Link href="codedebugging">
+              <div className={styles.button}>CodeDebuggingGPT</div>
             </Link>
             <Link href="codegenerator">
               <div className={styles.button}>CodeGeneratorGPT</div>

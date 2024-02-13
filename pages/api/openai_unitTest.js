@@ -5,13 +5,13 @@ import OpenAI from 'openai';
 const openai = new OpenAI({
   apiKey: "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"
 });
-
 const myExportedFunction = async (req, res, temperature) => {
   let userText;
+  const selectedPromptScenario = req.body.promptScenario;
 
   console.log('Temperature value in openai.js:', req.body.temperature);
 
-  if (req.body.useDefaultPrompt) {
+  if (selectedPromptScenario === 'detailedPrompt') {
     // Use the default prompt if the checkbox is checked
     /* userText =
       `Generate unit tests for the specified C# code
@@ -31,9 +31,14 @@ const myExportedFunction = async (req, res, temperature) => {
     - Test edge cases that the author may not have foreseen
     - Be easy to read and understand, with clean code and descriptive names
     - Be deterministic, so that the tests always pass or fail in the same way`;
-  } else {
+  } else if(selectedPromptScenario === 'zeroPrompt'){
     // Use the user-provided text if the checkbox is not checked
-    userText = req.body.userText || '';
+    userText = '';
+  }
+  else if(selectedPromptScenario === 'simplePrompt'){
+    userText = 'write a unit test';
+  }else{
+    userText = req.body.instructions;
   }
   // Append content from the uploaded file to userText
   if (req.body.name) {
