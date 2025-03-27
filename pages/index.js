@@ -28,14 +28,12 @@ const Dashboard = () => {
           <div className={styles.category}>
             <h3>Development Tools</h3>
             
-            <Link href="angularupdate">
-              <div className={styles.button}>AngularUpdateGPT</div>
-            </Link>
+        
             <Link href="commitmessage">
               <div className={styles.button}>CommitMessageGPT</div>
             </Link>
             <Link href="codedebugging">
-              <div className={styles.button}>CodeDebuggingGPT</div>
+              <div className={styles.button}>CodeDebugGPT</div>
             </Link>
             <Link href="codegenerator">
               <div className={styles.button}>CodeGeneratorGPT</div>

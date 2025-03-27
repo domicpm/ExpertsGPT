@@ -13,11 +13,11 @@ export default function Home() {
   const [copySuccess, setCopySuccess] = useState(false);
   const [instructions, setInstructions] = useState('');
   const [useDefaultPrompt, setUseDefaultPrompt] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('gpt-4'); // Default model
+  const [selectedModel, setSelectedModel] = useState('gpt-4-0125-preview'); // Default model
   const [showTooltip, setShowTooltip] = useState(false);
-  const [temperature, setTemperature] = useState(0.5); // Initial temperature value
+  const [selectedTemperature, setSelectedTemperature] = useState(0.0); // Initial temperature value
   const [query, setQuery] = useState(''); // Add this line for query state
-  const [selectedPromptScenario, setSelectedPromptScenario] = useState('zero-prompt'); // Default prompt scenario
+  const [selectedPromptScenario, setSelectedPromptScenario] = useState('detailedPrompt'); // Default prompt scenario
 
   const copyToClipboard = () => {
     const textarea = document.createElement('textarea');
@@ -56,7 +56,9 @@ export default function Home() {
   const handlePromptScenarioChange = (event) => {
     setSelectedPromptScenario(event.target.value);
   };
-  
+  const handleModelchange = (event) => {
+    setSelectedModel(event.target.value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,8 +70,9 @@ export default function Home() {
           body: JSON.stringify({
             name: search,
             instructions: instructions,
+            selectedModel: selectedModel,
             promptScenario: selectedPromptScenario,
-            temperature: temperature,
+            temperature: selectedTemperature,
           }),
           headers: {
             'Content-Type': 'application/json',
@@ -121,7 +124,7 @@ export default function Home() {
               </div>
               <input
                 type="file"
-                accept=".cs"
+                accept=".java"
                 onChange={(event) => handleFileUpload(event)}
                 className={styles.fileInput}
               />
@@ -143,8 +146,7 @@ export default function Home() {
                 value={selectedModel}
                 onChange={(event) => setSelectedModel(event.target.value)}
               >
-                <option value="gpt-4-preview">gpt-4-1106-preview</option>
-                <option value="gpt-4">gpt-4</option>
+                <option value="gpt-4-0125-preview">gpt-4-0125-preview</option>
                 <option value="gpt-3.5-turbo-0125">gpt-3.5-turbo-0125</option>
               </select>
         
@@ -155,9 +157,8 @@ export default function Home() {
                 value={selectedPromptScenario}
                 onChange={(event) => setSelectedPromptScenario(event.target.value)}
               >
-                <option value="zeroPrompt">Zero prompt</option>
-                <option value="simplePrompt">Simple prompt</option>
-                <option value="detailedPrompt">Detailed prompt</option>
+                <option value="simplePrompt">simplePrompt</option>
+                <option value="detailedPrompt">detailedPrompt</option>
               </select>
       
             </div>
@@ -169,10 +170,10 @@ export default function Home() {
                 min="0"
                 max="2"
                 step="0.1"
-                value={temperature}
-                onChange={(event) => setTemperature(parseFloat(event.target.value))}
+                value={selectedTemperature}
+                onChange={(event) => setSelectedTemperature(parseFloat(event.target.value))}
               />
-              <span>{temperature.toFixed(1)}</span>
+              <span>{selectedTemperature.toFixed(1)}</span>
             </div>
 
     
